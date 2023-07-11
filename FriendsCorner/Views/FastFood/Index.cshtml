@@ -1,0 +1,207 @@
+﻿
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/style.cshtml";
+}
+
+<nav class="navbar navbar-dark bg-success">
+    <div class="container-fluid d-flex justify-content-center">
+        <span class="navbar-brand mb-0 h1 fw-bolder fs-2 text-warning">FRIEND'S CORNER</span>
+    </div>
+</nav>
+
+<div class="row">
+
+    <div class="col-sm-3">
+        <div class="container">
+            <div class="list-group-item list-group-item-action active bg-warning mt-3 p-2 fs-5 text-danger text-xxl-center fw-bolder">
+                Food Items
+            </div>
+            <div class="panel-body bg-dark" style="color:white">
+                <form id="form-project">
+                    <div class="form-group">
+
+                        <div>
+                            <img src="~/images/img1.jpg" id="bur" class="photo" width="200" height="200" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                            <b class="ps-5 fw-bolder fs-5">Cheese Burger</b>
+                        </div>
+
+                        <div>
+                            <img src="~/images/img2.jpg" id="chw" class="photo" width="200" height="200" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                            <b class="ps-5 fw-bolder fs-5">Chicken Wrap</b>
+                        </div>
+
+                        <div>
+                            <img src="~/images/img9.jpg" id="vegsd" class="photo" width="200" height="200" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                            <b class="ps-5 fw-bolder fs-5">Veg Sandwich</b>
+                        </div>
+
+                        <div>
+                            <img src="~/images/img7.jpg" id="spza" class="photo" width="200" height="200" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                            <b class="ps-5 fw-bolder fs-5">Special Pizza</b>
+                        </div>
+
+                        <div>
+                            <img src="~/images/img8.jpg" id="scn" class="photo" width="200" height="200" data-bs-toggle="modal" data-bs-target="#exampleModal"/>
+                            <b class="ps-5 fw-bolder fs-5">Spicy Noodles</b>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="col-sm-6">
+        <div class="container">
+            <div class="list-group-item list-group-item-action active bg-warning mt-3 p-2 fs-5 text-danger text-xxl-center fw-bolder">
+                Add Food Items
+            </div>
+            <table id="tbl-item" class="table table-dark table-bordered" cellpadding="0" cellspacing="0" align="center">
+                <thead>
+                    <tr>
+                        <th>Delete</th>
+                        <th>Food Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                <tbody>
+
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="col-sm-3">
+        <div class="container">
+            <div class="list-group-item list-group-item-action active bg-warning mt-3 p-2 fs-5 text-danger text-xxl-center fw-bolder">
+                Billing Details
+            </div>
+
+            <div>
+                <input type="text" style="color: darkgoldenrod; background: black; font-size: 37.5px" id="total" name="total" placeholder="Total" />
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-info mt-2" name="reset" id="reset" onclick="reset()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Enter Quantity</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <lable>Quantity</lable>
+                    <input type="number" id="qty" name="qty" placeholder="Quantity" value="1"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="add()">Add Food Items</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts{
+        
+        <script src="~/Scripts/jquery-3.4.1.js"></script>
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        
+        <script type="text/javascript">
+
+            var total = 0;
+            var tot = 0;
+            var item = null;
+            var price = 0;
+
+            var a = ""
+
+            $("img").on("click", function ()
+            {
+                a = $(this).prop("id")
+            });
+
+            function add()
+            {
+                if (a == "bur")
+                {
+                    item = "Cheese Burger";
+                    price = 80;
+                }
+                else if (a == "chw")
+                {
+                    item = "Chicken Wrap";
+                    price = 90;
+                }
+                else if (a == "vegsd") {
+                    item = "Veg Sandwich";
+                    price = 75;
+                }
+                else if (a == "spza") {
+                    item = "Special Pizza";
+                    price = 250;
+                }
+                else if (a == "scn") {
+                    item = "Spicy Noodlesa";
+                    price = 150;
+                }
+
+                var qty = $("#qty").val();
+
+                tot = qty * price;
+
+                var table =
+                    "<tr>" +
+                    "<td><button type='button' name='record' class='btn btn-danger' onclick='deleterow(this)'>Delete</td>" +
+                    "<td>" + item + "</td>" +
+                    "<td>" + price + "</td>" +
+                    "<td>" + qty + "</td>" +
+                    "<td>" + tot + "</td>" +
+                    "</tr>";
+
+                // Increment
+                total += Number(tot);
+
+                $("#total").val(total);
+                $("#tbl-item tbody").append(table);
+
+                ("#exampleModal").model("hide");
+            }
+
+            
+            function deleterow(e)
+            {
+                total_cost = parseInt($(e).parent().parent().find('td:last').text(), 10);
+                total -= total_cost;
+
+                // Decrement
+                $('#total').val(total);
+                $(e).parent().parent().remove();
+            }
+
+            function reset()
+            {
+                location.reload();
+            }
+
+        </script>
+        
+        }
+
+
